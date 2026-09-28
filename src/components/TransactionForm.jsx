@@ -19,28 +19,55 @@ const TransactionForm = ({ onAddTransaction, onCancel, compact = false }) => {
     setCategory("");
   };
 
-  const submit = (event) => {
-    event.preventDefault();
-    if (!amount || Number(amount) <= 0 || !category || !description.trim() || !date) {
-      setError("Please complete all fields and enter an amount greater than 0.");
-      return;
-    }
+const submit = (event) => {
+  event.preventDefault();
 
-    onAddTransaction({
-      type,
-      amount: Number(amount),
-      category,
-      description: description.trim(),
-      date,
-    });
+  if (!amount) {
+    setError("Please enter an amount.");
+    return;
+  }
 
-    setAmount("");
-    setCategory("");
-    setDescription("");
-    setDate(today);
-    setError("");
-    if (onCancel) onCancel();
-  };
+  if (Number(amount) <= 0) {
+    setError("Amount must be greater than 0.");
+    return;
+  }
+
+  if (!category) {
+    setError("Please select a category.");
+    return;
+  }
+
+  if (!description.trim()) {
+    setError("Please enter a description.");
+    return;
+  }
+
+  if (!date) {
+    setError("Please select a date.");
+    return;
+  }
+
+  if (date > today) {
+    setError("Transaction date cannot be in the future.");
+    return;
+  }
+
+  onAddTransaction({
+    type,
+    amount: Number(amount),
+    category,
+    description: description.trim(),
+    date,
+  });
+
+  setAmount("");
+  setCategory("");
+  setDescription("");
+  setDate(today);
+  setError("");
+
+  if (onCancel) onCancel();
+};
 
   return (
     <form className={`transaction-form ${compact ? "compact" : "card"}`} onSubmit={submit}>
@@ -81,7 +108,12 @@ const TransactionForm = ({ onAddTransaction, onCancel, compact = false }) => {
 
         <label>
           Date
-          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+          <input
+            type="date"
+            value={date}
+            max={today}
+            onChange={(e) => setDate(e.target.value)}
+            />
         </label>
       </div>
 
