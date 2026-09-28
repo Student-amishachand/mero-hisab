@@ -6,7 +6,7 @@ const Navbar = ({ darkMode, onToggleTheme }) => {
     <header className="navbar">
       <div className="navbar-inner">
         <NavLink to="/" className="brand">
-          <span className="brand-mark">₹</span>
+          <img src="/src/assets/website_icon.jpg" alt="Mero Hisab Logo" className="logo-icon" />          
           <span>
             <strong>Mero Hisab</strong>
             <small>Your Money. Your Hisab.</small>
