@@ -124,4 +124,9 @@ const submit = (event) => {
   );
 };
 
+<div className="empty-state">
+  <h3>No transactions yet</h3>
+  <p>Add your first income or expense to start tracking your money.</p>
+</div>
+
 export default TransactionForm;
